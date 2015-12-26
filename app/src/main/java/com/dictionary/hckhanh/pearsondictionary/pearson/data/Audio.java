@@ -1,4 +1,4 @@
-package com.dictionary.hckhanh.pearsondictionary.data;
+package com.dictionary.hckhanh.pearsondictionary.pearson.data;
 
 public class Audio {
 

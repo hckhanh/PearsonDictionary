@@ -1,7 +1,6 @@
-package com.dictionary.hckhanh.pearsondictionary;
+package com.dictionary.hckhanh.pearsondictionary.pearson.service;
 
-import com.dictionary.hckhanh.pearsondictionary.data.Definition;
-import com.dictionary.hckhanh.pearsondictionary.service.PearsonService;
+import com.dictionary.hckhanh.pearsondictionary.pearson.data.Definition;
 
 import java.io.IOException;
 
@@ -14,9 +13,9 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class PearsonServciceManager {
+public class PearsonServiceManager {
 
-    public PearsonServciceManager(PearsonApiConfig apiConfig) {
+    public PearsonServiceManager(PearsonApiConfig apiConfig) {
         this.apiConfig = apiConfig;
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(apiConfig.getBaseUrl())
@@ -36,7 +35,7 @@ public class PearsonServciceManager {
                 if (consumerKey != null) {
                     definitionCall = pearsonService.findWordWithKey(apiConfig.getDictionary(), word, apiConfig.getConsumerKey());
                 } else {
-                    definitionCall = pearsonService.findWord(apiConfig.getDictionary(), word);
+                    definitionCall = pearsonService.findWord(word);
                 }
 
                 try {

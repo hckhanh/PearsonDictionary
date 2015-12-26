@@ -1,4 +1,4 @@
-package com.dictionary.hckhanh.pearsondictionary;
+package com.dictionary.hckhanh.pearsondictionary.pearson.service;
 
 public class PearsonApiConfig {
 
