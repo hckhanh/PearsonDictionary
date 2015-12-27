@@ -15,11 +15,11 @@ import rx.functions.Action1;
 
 public class DictionaryActivity extends AppCompatActivity {
 
-    private static final String BASE_URL = "https://api.pearson.com";
-    private static final String DICTIONARY = "ldoce5";
-    private static final String CONSUMER_KEY = "ENTER_API_KEY_HERE";
+    public static final String BASE_URL = "https://api.pearson.com";
+    public static final String DICTIONARY = "ldoce5";
+    public static final String CONSUMER_KEY = null; // Enter your co
 
-    PearsonServiceManager pearsonServciceManager;
+    PearsonServiceManager pearsonServiceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +30,12 @@ public class DictionaryActivity extends AppCompatActivity {
 
         PearsonApiConfig apiConfig = new PearsonApiConfig(
                 BASE_URL,
-                null,
+                CONSUMER_KEY,
                 DICTIONARY
         );
 
-        pearsonServciceManager = new PearsonServiceManager(apiConfig);
-        pearsonServciceManager.getDefinition("happy")
+        pearsonServiceManager = new PearsonServiceManager(apiConfig);
+        pearsonServiceManager.getDefinition("happy")
             .subscribe(new Action1<Definition>() {
                 @Override
                 public void call(Definition definition) {
