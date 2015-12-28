@@ -1,17 +1,15 @@
 package com.dictionary.hckhanh.pearsondictionary;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.dictionary.hckhanh.pearsondictionary.pearson.data.Definition;
-import com.dictionary.hckhanh.pearsondictionary.pearson.service.PearsonApiConfig;
+import com.dictionary.hckhanh.pearsondictionary.fragment.DictionaryPagerManager;
 import com.dictionary.hckhanh.pearsondictionary.pearson.service.PearsonServiceManager;
-
-import rx.functions.Action1;
 
 public class DictionaryActivity extends AppCompatActivity {
 
@@ -28,22 +26,30 @@ public class DictionaryActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        PearsonApiConfig apiConfig = new PearsonApiConfig(
-                BASE_URL,
-                CONSUMER_KEY,
-                DICTIONARY
-        );
+//        PearsonApiConfig apiConfig = new PearsonApiConfig(
+//                BASE_URL,
+//                CONSUMER_KEY,
+//                DICTIONARY
+//        );
+//
+//        pearsonServiceManager = new PearsonServiceManager(apiConfig);
+//        pearsonServiceManager.getDefinition("happy")
+//            .subscribe(new Action1<Definition>() {
+//                @Override
+//                public void call(Definition definition) {
+//                    Toast.makeText(DictionaryActivity.this, String.format("%d", definition.getStatus()), Toast.LENGTH_SHORT)
+//                            .show();
+//
+//                }
+//            });
 
-        pearsonServiceManager = new PearsonServiceManager(apiConfig);
-        pearsonServiceManager.getDefinition("happy")
-            .subscribe(new Action1<Definition>() {
-                @Override
-                public void call(Definition definition) {
-                    Toast.makeText(DictionaryActivity.this, String.format("%d", definition.getStatus()), Toast.LENGTH_SHORT)
-                            .show();
+        // Add adapter to pager
+        ViewPager dictPager = (ViewPager) findViewById(R.id.dict_pager);
+        dictPager.setAdapter(new DictionaryPagerManager(getSupportFragmentManager()));
 
-                }
-            });
+        // Add pager to Tab Layout
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tab);
+        tabLayout.setupWithViewPager(dictPager);
     }
 
     @Override
