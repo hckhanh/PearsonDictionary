@@ -2,6 +2,10 @@ package com.dictionary.hckhanh.pearsondictionary.pearson.data;
 
 public class Definition {
 
+    int status;
+
+    Word[] results;
+
     public int getStatus() {
         return status;
     }
@@ -9,8 +13,4 @@ public class Definition {
     public Word[] getResults() {
         return results;
     }
-
-    int status;
-
-    Word[] results;
 }

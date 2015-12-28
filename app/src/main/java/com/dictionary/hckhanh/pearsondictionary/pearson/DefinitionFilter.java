@@ -8,6 +8,10 @@ import java.util.List;
 
 public class DefinitionFilter {
 
+    List<Word> meanings;
+
+    List<Word> synonyms;
+
     public DefinitionFilter(Definition definition, String sampleWord) {
         meanings = new ArrayList<>();
         synonyms = new ArrayList<>();
@@ -29,9 +33,5 @@ public class DefinitionFilter {
     public List<Word> getSynonyms() {
         return synonyms;
     }
-
-    List<Word> meanings;
-
-    List<Word> synonyms;
 
 }

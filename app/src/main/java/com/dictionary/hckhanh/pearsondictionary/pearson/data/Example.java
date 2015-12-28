@@ -2,6 +2,12 @@ package com.dictionary.hckhanh.pearsondictionary.pearson.data;
 
 public class Example {
 
+    Audio[] audio;
+
+    String text;
+
+    String synonym;
+
     public Audio[] getAudio() {
         return audio;
     }
@@ -13,11 +19,5 @@ public class Example {
     public String getSynonym() {
         return synonym;
     }
-
-    Audio[] audio;
-
-    String text;
-
-    String synonym;
 
 }

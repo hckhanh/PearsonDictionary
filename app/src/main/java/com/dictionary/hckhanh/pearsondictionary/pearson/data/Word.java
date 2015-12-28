@@ -2,6 +2,16 @@ package com.dictionary.hckhanh.pearsondictionary.pearson.data;
 
 public class Word {
 
+    String id;
+
+    String headword;
+
+    String part_of_speech;
+
+    Pronunciation[] pronunciations;
+
+    Sense[] senses;
+
     public String getId() {
         return id;
     }
@@ -21,15 +31,5 @@ public class Word {
     public Sense[] getSenses() {
         return senses;
     }
-
-    String id;
-
-    String headword;
-
-    String part_of_speech;
-
-    Pronunciation[] pronunciations;
-
-    Sense[] senses;
 
 }

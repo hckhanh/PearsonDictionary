@@ -2,6 +2,12 @@ package com.dictionary.hckhanh.pearsondictionary.pearson.service;
 
 public class PearsonApiConfig {
 
+    String baseUrl;
+
+    String consumerKey;
+
+    String dictionary;
+
     public PearsonApiConfig(String baseUrl, String consumerKey, String dictionary) {
         this.baseUrl = baseUrl;
         this.consumerKey = consumerKey;
@@ -19,10 +25,4 @@ public class PearsonApiConfig {
     public String getDictionary() {
         return dictionary;
     }
-
-    String baseUrl;
-
-    String consumerKey;
-
-    String dictionary;
 }

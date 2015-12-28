@@ -4,25 +4,29 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-public class DictionaryPagerManager extends FragmentPagerAdapter {
+import java.util.List;
 
-    public DictionaryPagerManager(FragmentManager fm) {
+public class PagerManager extends FragmentPagerAdapter {
+
+    public static List<Pager> pagers;
+
+    public PagerManager(FragmentManager fm) {
         super(fm);
     }
 
     @Override
     public Fragment getItem(int position) {
-        return new MeaningsFragment();
+        return new PagerFragment();
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return pagers.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return "Tab 1";
+        return pagers.get(position).tabTitle;
     }
 
 }

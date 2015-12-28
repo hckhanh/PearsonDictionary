@@ -2,6 +2,10 @@ package com.dictionary.hckhanh.pearsondictionary.pearson.data;
 
 public class Pronunciation {
 
+    String ipa;
+
+    Audio[] audio;
+
     public String getIpa() {
         return ipa;
     }
@@ -9,9 +13,5 @@ public class Pronunciation {
     public Audio[] getAudio() {
         return audio;
     }
-
-    String ipa;
-
-    Audio[] audio;
 
 }

@@ -2,6 +2,10 @@ package com.dictionary.hckhanh.pearsondictionary.pearson.data;
 
 public class Sense {
 
+    String[] definition;
+
+    Example[] examples;
+
     public String[] getDefinition() {
         return definition;
     }
@@ -9,9 +13,5 @@ public class Sense {
     public Example[] getExamples() {
         return examples;
     }
-
-    String[] definition;
-
-    Example[] examples;
 
 }
