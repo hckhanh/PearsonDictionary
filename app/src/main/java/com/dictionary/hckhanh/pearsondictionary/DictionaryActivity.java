@@ -12,6 +12,7 @@ import com.dictionary.hckhanh.pearsondictionary.fragment.Pager;
 import com.dictionary.hckhanh.pearsondictionary.fragment.PagerManager;
 import com.dictionary.hckhanh.pearsondictionary.pearson.DefinitionFilter;
 import com.dictionary.hckhanh.pearsondictionary.pearson.data.Definition;
+import com.dictionary.hckhanh.pearsondictionary.pearson.data.Word;
 import com.dictionary.hckhanh.pearsondictionary.pearson.service.PearsonApiConfig;
 import com.dictionary.hckhanh.pearsondictionary.pearson.service.PearsonServiceManager;
 
@@ -26,6 +27,8 @@ public class DictionaryActivity extends AppCompatActivity {
     public static final String CONSUMER_KEY = null; // Enter your consumer key here...
 
     PearsonServiceManager pearsonServiceManager;
+
+    PagerManager pagerManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,21 +49,25 @@ public class DictionaryActivity extends AppCompatActivity {
                 @Override
                 public void call(Definition definition) {
                     DefinitionFilter filter = new DefinitionFilter(definition, "record");
-                    Pager meaningPager = new Pager("Meaning", filter.getMeanings());
-
-                    ArrayList<Pager> pagers = new ArrayList<>();
-                    pagers.add(meaningPager);
-                    PagerManager.pagers = pagers;
-
-                    // Add adapter to pager
-                    ViewPager dictPager = (ViewPager) findViewById(R.id.dict_pager);
-                    dictPager.setAdapter(new PagerManager(getSupportFragmentManager()));
-
-                    // Add pager to Tab Layout
-                    TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tab);
-                    tabLayout.setupWithViewPager(dictPager);
+                    PagerManager.pagers.get(0).addWords(filter.getMeanings());
+                    pagerManager.notifyDataSetChanged();
                 }
             });
+
+        Pager meaningPager = new Pager("Meaning", new ArrayList<Word>());
+
+        ArrayList<Pager> pagers = new ArrayList<>();
+        pagers.add(meaningPager);
+        PagerManager.pagers = pagers;
+
+        // Add adapter to pager
+        ViewPager dictPager = (ViewPager) findViewById(R.id.dict_pager);
+        pagerManager = new PagerManager(getSupportFragmentManager());
+        dictPager.setAdapter(pagerManager);
+
+        // Add pager to Tab Layout
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tab);
+        tabLayout.setupWithViewPager(dictPager);
     }
 
     @Override

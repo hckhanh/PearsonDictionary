@@ -23,4 +23,11 @@ public class Pager {
         return words;
     }
 
+    public void setWords(List<Word> words) {
+        this.words = words;
+    }
+
+    public void addWords(List<Word> words) {
+        this.words.addAll(words);
+    }
 }
