@@ -8,8 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.dictionary.hckhanh.pearsondictionary.fragment.Pager;
+import com.dictionary.hckhanh.pearsondictionary.fragment.word.WordPager;
 import com.dictionary.hckhanh.pearsondictionary.fragment.PagerManager;
+import com.dictionary.hckhanh.pearsondictionary.fragment.word.WordPagerFragment;
 import com.dictionary.hckhanh.pearsondictionary.pearson.DefinitionFilter;
 import com.dictionary.hckhanh.pearsondictionary.pearson.data.Definition;
 import com.dictionary.hckhanh.pearsondictionary.pearson.data.Word;
@@ -49,16 +50,13 @@ public class DictionaryActivity extends AppCompatActivity {
                 @Override
                 public void call(Definition definition) {
                     DefinitionFilter filter = new DefinitionFilter(definition, "record");
-                    PagerManager.pagers.get(0).addWords(filter.getMeanings());
-                    pagerManager.notifyDataSetChanged();
+                    WordPager wordPager = (WordPager) pagerManager.getPager(0);
+
+                    wordPager.addWords(filter.getMeanings());
+                    wordPager.getPagerFragment().notifyDataSetChanged();
                 }
             });
 
-        Pager meaningPager = new Pager("Meaning", new ArrayList<Word>());
-
-        ArrayList<Pager> pagers = new ArrayList<>();
-        pagers.add(meaningPager);
-        PagerManager.pagers = pagers;
 
         // Add adapter to pager
         ViewPager dictPager = (ViewPager) findViewById(R.id.dict_pager);
@@ -68,6 +66,10 @@ public class DictionaryActivity extends AppCompatActivity {
         // Add pager to Tab Layout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tab);
         tabLayout.setupWithViewPager(dictPager);
+
+        WordPager meaningWordPager = new WordPager("Meaning", new ArrayList<Word>(), WordPagerFragment.class);
+        pagerManager.addPager(meaningWordPager);
+        pagerManager.notifyDataSetChanged();
     }
 
     @Override

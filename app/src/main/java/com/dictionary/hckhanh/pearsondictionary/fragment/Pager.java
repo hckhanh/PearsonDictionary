@@ -1,33 +1,34 @@
 package com.dictionary.hckhanh.pearsondictionary.fragment;
 
-import com.dictionary.hckhanh.pearsondictionary.pearson.data.Word;
-
-import java.util.List;
-
 public class Pager {
 
     String tabTitle;
 
-    List<Word> words;
+    PagerFragment pagerFragment;
 
-    public Pager(String title, List<Word> words) {
+    Class<? extends PagerFragment> fragmentClass;
+
+    public Pager(String title, Class<? extends PagerFragment> fragmentClass) {
         this.tabTitle = title;
-        this.words = words;
+        this.fragmentClass = fragmentClass;
     }
 
     public String getTabTitle() {
         return tabTitle;
     }
 
-    public List<Word> getWords() {
-        return words;
+    public PagerFragment getPagerFragment() {
+        if (pagerFragment == null) {
+            try {
+                pagerFragment = fragmentClass.newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return pagerFragment;
     }
 
-    public void setWords(List<Word> words) {
-        this.words = words;
-    }
-
-    public void addWords(List<Word> words) {
-        this.words.addAll(words);
-    }
 }

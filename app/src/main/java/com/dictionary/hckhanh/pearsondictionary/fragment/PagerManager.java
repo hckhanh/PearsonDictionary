@@ -4,19 +4,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PagerManager extends FragmentPagerAdapter {
 
-    public static List<Pager> pagers;
+    public List<Pager> pagers;
 
     public PagerManager(FragmentManager fm) {
         super(fm);
+        pagers = new ArrayList<>();
     }
 
     @Override
     public Fragment getItem(int position) {
-        return new PagerFragment();
+        return pagers.get(position).getPagerFragment();
     }
 
     @Override
@@ -26,7 +28,14 @@ public class PagerManager extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return pagers.get(position).tabTitle;
+        return pagers.get(position).getTabTitle();
     }
 
+    public void addPager(Pager pager) {
+        pagers.add(pager);
+    }
+
+    public Pager getPager(int position) {
+        return pagers.get(position);
+    }
 }
