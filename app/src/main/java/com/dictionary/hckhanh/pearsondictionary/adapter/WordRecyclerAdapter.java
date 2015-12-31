@@ -52,15 +52,19 @@ public class WordRecyclerAdapter extends RecyclerView.Adapter<WordRecyclerAdapte
         Sense[] senses = word.getSenses();
         if (senses != null) {
             for (Sense sense : senses) {
-                String[] defs = sense.getDefinition();
-                Example[] examples = sense.getExamples();
 
-                for (String def : defs) {
-                    contentTextBuilder.append("<h3>").append(def).append("</h3><br />");
+                String[] defs = sense.getDefinition();
+                if (defs != null) {
+                    for (String def : defs) {
+                        contentTextBuilder.append("<h3>").append(def).append("</h3>");
+                    }
                 }
 
-                for (Example example : examples) {
-                    contentTextBuilder.append("<p>").append(example.getText()).append("</p><br />");
+                Example[] examples = sense.getExamples();
+                if (examples != null) {
+                    for (Example example : examples) {
+                        contentTextBuilder.append("<p>").append(example.getText()).append("</p><br />");
+                    }
                 }
             }
         }

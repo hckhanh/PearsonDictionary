@@ -4,12 +4,13 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.dictionary.hckhanh.pearsondictionary.fragment.word.WordPager;
 import com.dictionary.hckhanh.pearsondictionary.fragment.PagerManager;
+import com.dictionary.hckhanh.pearsondictionary.fragment.word.WordPager;
 import com.dictionary.hckhanh.pearsondictionary.fragment.word.WordPagerFragment;
 import com.dictionary.hckhanh.pearsondictionary.pearson.DefinitionFilter;
 import com.dictionary.hckhanh.pearsondictionary.pearson.data.Definition;
@@ -31,6 +32,34 @@ public class DictionaryActivity extends AppCompatActivity {
 
     PagerManager pagerManager;
 
+    SearchView.OnQueryTextListener onQueryTextListener = new SearchView.OnQueryTextListener() {
+        @Override
+        public boolean onQueryTextSubmit(final String query) {
+            pearsonServiceManager.getDefinition(query)
+                    .subscribe(new Action1<Definition>() {
+                        @Override
+                        public void call(Definition definition) {
+                            if (definition.getCount() > 0) {
+                                DefinitionFilter filter = new DefinitionFilter(definition, query);
+                                WordPager wordPager = (WordPager) pagerManager.getPager(0);
+
+                                wordPager.addWords(filter.getMeanings());
+                                wordPager.getPagerFragment().notifyDataSetChanged();
+                            } else {
+
+                            }
+                        }
+                    });
+
+            return true;
+        }
+
+        @Override
+        public boolean onQueryTextChange(String newText) {
+            return false;
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,18 +74,6 @@ public class DictionaryActivity extends AppCompatActivity {
         );
 
         pearsonServiceManager = new PearsonServiceManager(apiConfig);
-        pearsonServiceManager.getDefinition("record")
-            .subscribe(new Action1<Definition>() {
-                @Override
-                public void call(Definition definition) {
-                    DefinitionFilter filter = new DefinitionFilter(definition, "record");
-                    WordPager wordPager = (WordPager) pagerManager.getPager(0);
-
-                    wordPager.addWords(filter.getMeanings());
-                    wordPager.getPagerFragment().notifyDataSetChanged();
-                }
-            });
-
 
         // Add adapter to pager
         ViewPager dictPager = (ViewPager) findViewById(R.id.dict_pager);
@@ -76,6 +93,10 @@ public class DictionaryActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_dictionary, menu);
+
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setOnQueryTextListener(onQueryTextListener);
         return true;
     }
 
