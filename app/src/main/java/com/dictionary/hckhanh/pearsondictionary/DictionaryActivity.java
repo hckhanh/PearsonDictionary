@@ -41,12 +41,15 @@ public class DictionaryActivity extends AppCompatActivity {
                         public void call(Definition definition) {
                             if (definition.getCount() > 0) {
                                 DefinitionFilter filter = new DefinitionFilter(definition, query);
-                                WordPager wordPager = (WordPager) pagerManager.getPager(0);
+                                WordPager meaningPager = (WordPager) pagerManager.getPager(0);
+                                WordPager synonymsPager = (WordPager) pagerManager.getPager(1);
 
-                                wordPager.addWords(filter.getMeanings());
-                                wordPager.getPagerFragment().notifyDataSetChanged();
+                                meaningPager.addWords(filter.getMeanings());
+                                synonymsPager.addWords(filter.getSynonyms());
+
+                                meaningPager.getPagerFragment().notifyDataSetChanged();
+                                synonymsPager.getPagerFragment().notifyDataSetChanged();
                             } else {
-
                             }
                         }
                     });
@@ -85,7 +88,10 @@ public class DictionaryActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(dictPager);
 
         WordPager meaningWordPager = new WordPager("Meaning", new ArrayList<Word>(), WordPagerFragment.class);
+        WordPager synonymWordPager = new WordPager("Synonyms", new ArrayList<Word>(), WordPagerFragment.class);
         pagerManager.addPager(meaningWordPager);
+        pagerManager.addPager(synonymWordPager);
+
         pagerManager.notifyDataSetChanged();
     }
 
