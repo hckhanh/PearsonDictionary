@@ -13,6 +13,8 @@ import rx.functions.Action1;
 
 public class PearsonServiceTest extends ActivityInstrumentationTestCase2<DictionaryActivity> {
 
+    private Solo solo;
+
     public PearsonServiceTest() {
         super(DictionaryActivity.class);
     }
@@ -52,7 +54,5 @@ public class PearsonServiceTest extends ActivityInstrumentationTestCase2<Diction
                     }
                 });
     }
-
-    private Solo solo;
 
 }
