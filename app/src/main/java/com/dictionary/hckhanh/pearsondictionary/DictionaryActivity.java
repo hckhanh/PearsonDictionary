@@ -28,7 +28,6 @@ public class DictionaryActivity extends AppCompatActivity {
     public static final String BASE_URL = "https://api.pearson.com";
     public static final String DICTIONARY = "ldoce5";
     public static final String CONSUMER_KEY = null; // Enter your consumer key here...
-    private static final String STATE_CURRENT_WORD = "current_word";
 
     PearsonServiceManager pearsonServiceManager;
 
