@@ -45,7 +45,11 @@ public class WordRecyclerAdapter extends RecyclerView.Adapter<WordRecyclerAdapte
         if (pronunciations != null) {
             pronunTextBuilder.append(pronunciations[0].getIpa());
         }
-        pronunTextBuilder.append(" (").append(word.getPartOfSpeech()).append(')');
+
+        String partOfSpeech = word.getPartOfSpeech();
+        if (partOfSpeech != null)
+            pronunTextBuilder.append(" (").append(partOfSpeech).append(')');
+
         holder.pronunciationText.setText(pronunTextBuilder.toString());
 
         StringBuilder contentTextBuilder = new StringBuilder();
@@ -74,7 +78,11 @@ public class WordRecyclerAdapter extends RecyclerView.Adapter<WordRecyclerAdapte
 
     @Override
     public int getItemCount() {
-        return words.size();
+        return words == null ? 0 : words.size();
+    }
+
+    public void setWords(List<Word> words) {
+        this.words = words;
     }
 
     public static class WordViewHolder extends RecyclerView.ViewHolder {

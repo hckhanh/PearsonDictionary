@@ -16,9 +16,9 @@ public interface PearsonService {
             @Query("apikey") String comsumerKey
     );
 
-    @GET("/v2/dictionaries/ldoce5/entries")
+    @GET("/v2/dictionaries/{dictionary}/entries")
     Call<Definition> findWord(
-            //@Path("dictionary") String dictionary,
+            @Path("dictionary") String dictionary,
             @Query("headword") String headword
     );
 

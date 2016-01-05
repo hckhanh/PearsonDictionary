@@ -35,7 +35,7 @@ public class PearsonServiceManager {
                 if (consumerKey != null) {
                     definitionCall = pearsonService.findWordWithKey(apiConfig.getDictionary(), word, apiConfig.getConsumerKey());
                 } else {
-                    definitionCall = pearsonService.findWord(word);
+                    definitionCall = pearsonService.findWord(apiConfig.getDictionary(), word);
                 }
 
                 try {

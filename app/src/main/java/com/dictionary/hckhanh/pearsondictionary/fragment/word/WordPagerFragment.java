@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.dictionary.hckhanh.pearsondictionary.R;
 import com.dictionary.hckhanh.pearsondictionary.adapter.WordRecyclerAdapter;
@@ -23,12 +24,13 @@ public class WordPagerFragment extends PagerFragment {
     @Bind(R.id.word_list)
     RecyclerView wordList;
 
+    @Bind(R.id.progress_bar)
+    ProgressBar progressBar;
+
     WordRecyclerAdapter wordRecyclerAdapter;
 
-    List<Word> words;
-
     public void setWords(List<Word> words) {
-        this.words = words;
+        wordRecyclerAdapter.setWords(words);
     }
 
     @Nullable
@@ -40,16 +42,29 @@ public class WordPagerFragment extends PagerFragment {
         wordList.setHasFixedSize(true);
         wordList.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        wordRecyclerAdapter = new WordRecyclerAdapter(words);
+        wordRecyclerAdapter = new WordRecyclerAdapter(null);
 
         wordList.setAdapter(wordRecyclerAdapter);
 
         return page;
     }
 
+
+
     @Override
     public void notifyDataSetChanged() {
         wordRecyclerAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void showLoadingIndicator() {
+        if (progressBar != null)
+            progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoadingIndicator() {
+        if (progressBar != null)
+            progressBar.setVisibility(View.GONE);
+    }
 }
