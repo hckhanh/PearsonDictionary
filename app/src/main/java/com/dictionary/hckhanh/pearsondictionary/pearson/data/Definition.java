@@ -4,7 +4,13 @@ public class Definition {
 
     int status;
 
+    int count;
+
     Word[] results;
+
+    public int getCount() {
+        return count;
+    }
 
     public int getStatus() {
         return status;
