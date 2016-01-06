@@ -2,6 +2,7 @@ package com.dictionary.hckhanh.pearsondictionary.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +73,7 @@ public class WordRecyclerAdapter extends RecyclerView.Adapter<WordRecyclerAdapte
                 }
             }
         }
-
+        Log.d("WORD_ADAPTER", Html.fromHtml(contentTextBuilder.toString()).toString());
         holder.contentText.setText(Html.fromHtml(contentTextBuilder.toString()));
     }
 

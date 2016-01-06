@@ -15,8 +15,15 @@ public class PearsonServiceTest extends ActivityInstrumentationTestCase2<Diction
 
     private Solo solo;
 
+    PearsonServiceManager serviceManager;
+
     public PearsonServiceTest() {
         super(DictionaryActivity.class);
+        serviceManager = new PearsonServiceManager(new PearsonApiConfig(
+                DictionaryActivity.BASE_URL,
+                DictionaryActivity.CONSUMER_KEY,
+                DictionaryActivity.DICTIONARY
+        ));
     }
 
     @Override
@@ -31,14 +38,6 @@ public class PearsonServiceTest extends ActivityInstrumentationTestCase2<Diction
 
     public void testResultFilterMeanings() {
         final String findingWord = "record";
-
-        PearsonApiConfig apiConfig = new PearsonApiConfig(
-                DictionaryActivity.BASE_URL,
-                DictionaryActivity.CONSUMER_KEY,
-                DictionaryActivity.DICTIONARY
-        );
-
-        PearsonServiceManager serviceManager = new PearsonServiceManager(apiConfig);
 
         serviceManager.getDefinition(findingWord)
                 .subscribe(new Action1<Definition>() {

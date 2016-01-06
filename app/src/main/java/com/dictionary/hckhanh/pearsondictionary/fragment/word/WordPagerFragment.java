@@ -49,8 +49,6 @@ public class WordPagerFragment extends PagerFragment {
         return page;
     }
 
-
-
     @Override
     public void notifyDataSetChanged() {
         wordRecyclerAdapter.notifyDataSetChanged();
