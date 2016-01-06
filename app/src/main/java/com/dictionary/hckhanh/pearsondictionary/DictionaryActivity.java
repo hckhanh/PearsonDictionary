@@ -87,12 +87,11 @@ public class DictionaryActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        PearsonApiConfig apiConfig = new PearsonApiConfig(
+        pearsonServiceManager = new PearsonServiceManager(new PearsonApiConfig(
                 BASE_URL,
                 CONSUMER_KEY,
                 DICTIONARY
-        );
-        pearsonServiceManager = new PearsonServiceManager(apiConfig);
+        ));
 
         WordPager meaningWordPager = new WordPager("Meaning", null, WordPagerFragment.class);
         WordPager moreWordPager = new WordPager("More", null, WordPagerFragment.class);

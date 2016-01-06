@@ -102,7 +102,6 @@ public class DictionaryActivityTest extends ActivityInstrumentationTestCase2<Dic
         // Click on the first item of the RecylerView
         List<TextView> textViews1 = solo.clickInRecyclerView(0);
 
-
         // Check the title 1 of the word: "record"
         assertEquals(findingWord, textViews1.get(0).getText().toString());
 
@@ -163,6 +162,7 @@ public class DictionaryActivityTest extends ActivityInstrumentationTestCase2<Dic
 
         // Turn off WIFI
         solo.setWiFiData(false);
+        solo.setMobileData(false);
 
         // Click on search icon
         View searchItem = solo.getView(R.id.search);
@@ -182,6 +182,7 @@ public class DictionaryActivityTest extends ActivityInstrumentationTestCase2<Dic
 
         // Turn on WIFI connection again
         solo.setWiFiData(true);
+        solo.setMobileData(true);
 
         assertTrue("Don't contain error message", hasErrorMessage);
 
