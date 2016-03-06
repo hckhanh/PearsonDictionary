@@ -21,6 +21,7 @@ import com.dictionary.hckhanh.pearsondictionary.word.WordPagerFragment;
 import java.net.UnknownHostException;
 import rx.Subscription;
 import rx.functions.Action1;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * The main activity of the dictionary app.
@@ -29,7 +30,7 @@ public class DictionaryActivity extends AppCompatActivity {
   @Bind(R.id.dict_pager) ViewPager dictPager;
   private ContentApiService contentApiService;
   private PagerManager pagerManager;
-  //private CompositeSubscription subscriptions = new CompositeSubscription();
+  private CompositeSubscription subscriptions = new CompositeSubscription();
   private SearchView.OnQueryTextListener onQueryTextListener =
       new SearchView.OnQueryTextListener() {
         @Override public boolean onQueryTextSubmit(final String query) {
@@ -53,6 +54,7 @@ public class DictionaryActivity extends AppCompatActivity {
               pagerManager.setWords(filteredWords);
               pagerManager.notifyDataSetChanged();
               pagerManager.hideLoadingIndicator();
+              dictPager.setCurrentItem(0);
             } else {
               Snackbar.make(dictPager, "No result. Try another word", Snackbar.LENGTH_LONG).show();
               pagerManager.hideLoadingIndicator();
@@ -71,7 +73,7 @@ public class DictionaryActivity extends AppCompatActivity {
           }
         });
 
-    //subscriptions.add(subscription);
+    subscriptions.add(subscription);
   }
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +86,8 @@ public class DictionaryActivity extends AppCompatActivity {
 
     contentApiService = ContentApiService.getContentApiService();
 
-    WordPager meaningWordPager = new WordPager("Meaning", null, WordPagerFragment.class);
-    WordPager moreWordPager = new WordPager("More", null, WordPagerFragment.class);
+    WordPager meaningWordPager = new WordPager("Meaning", null, new WordPagerFragment());
+    WordPager moreWordPager = new WordPager("More", null, new WordPagerFragment());
 
     // Add pager to pager manager
     pagerManager = new PagerManager(getSupportFragmentManager());
@@ -98,7 +100,10 @@ public class DictionaryActivity extends AppCompatActivity {
     // Add pager to Tab Layout
     TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tab);
     tabLayout.setupWithViewPager(dictPager);
+  }
 
+  @Override protected void onStart() {
+    super.onStart();
     queryWord("a");
   }
 
@@ -109,6 +114,12 @@ public class DictionaryActivity extends AppCompatActivity {
     SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
     searchView.setOnQueryTextListener(onQueryTextListener);
     return true;
+  }
+
+  // Release data and unsubscribe any subscriptions
+  @Override protected void onDestroy() {
+    super.onDestroy();
+    subscriptions.unsubscribe();
   }
 
   @Override public boolean onOptionsItemSelected(MenuItem item) {

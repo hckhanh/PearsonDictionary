@@ -1,7 +1,6 @@
 package com.dictionary.hckhanh.pearsondictionary.word;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,7 +24,7 @@ public class WordPagerFragment extends PagerFragment {
     wordRecyclerAdapter.setWords(words);
   }
 
-  @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View page = inflater.inflate(R.layout.fragment_meaning, container, false);
     ButterKnife.bind(this, page);
@@ -38,6 +37,14 @@ public class WordPagerFragment extends PagerFragment {
     wordList.setAdapter(wordRecyclerAdapter);
 
     return page;
+  }
+
+  /**
+   * Release data
+   */
+  @Override public void onDestroyView() {
+    super.onDestroyView();
+    ButterKnife.unbind(this);
   }
 
   @Override public void notifyDataSetChanged() {

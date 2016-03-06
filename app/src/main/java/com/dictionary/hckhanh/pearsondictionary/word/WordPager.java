@@ -7,8 +7,8 @@ public class WordPager extends Pager {
   List<Word> words;
 
   public WordPager(String title, List<Word> words,
-      Class<? extends WordPagerFragment> fragmentClass) {
-    super(title, fragmentClass);
+      PagerFragment pagerFragment) {
+    super(title, pagerFragment);
     this.words = words;
   }
 

@@ -31,10 +31,6 @@ public class PagerManager extends FragmentStatePagerAdapter {
     pagers.add(pager);
   }
 
-  public Pager getPager(int position) {
-    return pagers.get(position);
-  }
-
   public void setWords(DefinitionFilter filteredWords) {
     ((WordPager) pagers.get(0)).setWords(filteredWords.getMeanings());
     ((WordPager) pagers.get(1)).setWords(filteredWords.getSynonyms());

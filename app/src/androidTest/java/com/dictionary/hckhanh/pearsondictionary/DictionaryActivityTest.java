@@ -17,7 +17,7 @@ public class DictionaryActivityTest extends ActivityInstrumentationTestCase2<Dic
 
     public DictionaryActivityTest() {
         super(DictionaryActivity.class);
-        serviceManager = new ContentApiService();
+        serviceManager = ContentApiService.getContentApiService();
     }
 
     @Override

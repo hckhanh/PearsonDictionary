@@ -1,8 +1,6 @@
 package com.dictionary.hckhanh.pearsondictionary.pearson.service;
 
 import com.dictionary.hckhanh.pearsondictionary.pearson.data.Definition;
-import com.dictionary.hckhanh.pearsondictionary.pearson.data.Word;
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -33,9 +31,9 @@ public interface ContentApis {
    * @param dictionary The name of dictionary
    * @param headword The word which is searched
    * @param consumerKey the API key of service
-   * @return {@link Observable} of {@link Word} Object
+   * @return {@link Observable}<{@link Definition}>
    */
-  @GET("{dictionary}/entries") Call<Definition> findWord(
+  @GET("{dictionary}/entries") Observable<Definition> findWord(
       @Path("dictionary") String dictionary, @Query("headword") String headword,
       @Query("apikey") String consumerKey);
 }

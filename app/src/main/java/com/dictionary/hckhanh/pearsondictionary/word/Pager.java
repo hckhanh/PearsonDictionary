@@ -5,11 +5,9 @@ public class Pager {
 
   PagerFragment pagerFragment;
 
-  Class<? extends PagerFragment> fragmentClass;
-
-  public Pager(String title, Class<? extends PagerFragment> fragmentClass) {
+  public Pager(String title, PagerFragment pagerFragment) {
     this.tabTitle = title;
-    this.fragmentClass = fragmentClass;
+    this.pagerFragment = pagerFragment;
   }
 
   public String getTabTitle() {
@@ -17,16 +15,6 @@ public class Pager {
   }
 
   public PagerFragment getPagerFragment() {
-    if (pagerFragment == null) {
-      try {
-        pagerFragment = fragmentClass.newInstance();
-      } catch (InstantiationException e) {
-        e.printStackTrace();
-      } catch (IllegalAccessException e) {
-        e.printStackTrace();
-      }
-    }
-
     return pagerFragment;
   }
 }

@@ -84,6 +84,7 @@ public class WordRecyclerAdapter extends RecyclerView.Adapter<WordRecyclerAdapte
 
   public void setWords(List<Word> words) {
     this.words = words;
+    notifyDataSetChanged();
   }
 
   public static class WordViewHolder extends RecyclerView.ViewHolder {

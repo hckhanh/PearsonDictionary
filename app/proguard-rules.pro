@@ -16,7 +16,7 @@
 #   public *;
 #}
 
-# Retrofit
+# Retrofit2
 -dontwarn retrofit2.**
 -dontnote retrofit2.**
 -keep class retrofit2.** { *; }
@@ -25,6 +25,7 @@
 
 # Butter Knife
 -keep class butterknife.** { *; }
+-dontnote butterknife.**
 -dontwarn butterknife.internal.**
 -keep class **$$ViewBinder { *; }
 
@@ -64,10 +65,10 @@
 -keep class rx.** { *; }
 -dontnote rx.**
 
-# Keep all classess in data package which are used for Retrofit
+# Keep all classes in "pearson" package which are used for Retrofit2
 -keepclassmembers class com.dictionary.hckhanh.pearsondictionary.pearson.data.** {
   <fields>;
 }
-
-# Others
--keepattributes InnerClasses
+-keepclassmembers interface com.dictionary.hckhanh.pearsondictionary.pearson.service.ContentApis {
+  *;
+}
