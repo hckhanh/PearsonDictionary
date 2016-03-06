@@ -10,7 +10,9 @@ import android.widget.ProgressBar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.dictionary.hckhanh.pearsondictionary.R;
+import com.dictionary.hckhanh.pearsondictionary.pager.PagerFragment;
 import com.dictionary.hckhanh.pearsondictionary.pearson.data.Word;
+import com.dictionary.hckhanh.pearsondictionary.rx.RxEventBus;
 import java.util.List;
 
 public class WordPagerFragment extends PagerFragment {
@@ -33,10 +35,14 @@ public class WordPagerFragment extends PagerFragment {
     wordList.setLayoutManager(new LinearLayoutManager(getContext()));
 
     wordRecyclerAdapter = new WordRecyclerAdapter(null);
-
     wordList.setAdapter(wordRecyclerAdapter);
 
     return page;
+  }
+
+  @Override public void onStart() {
+    super.onStart();
+    RxEventBus.getEventBus().send(new OnWordStartEvent());
   }
 
   /**
@@ -57,5 +63,8 @@ public class WordPagerFragment extends PagerFragment {
 
   @Override public void hideLoadingIndicator() {
     if (progressBar != null) progressBar.setVisibility(View.GONE);
+  }
+
+  public static final class OnWordStartEvent {
   }
 }

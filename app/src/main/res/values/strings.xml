@@ -4,10 +4,10 @@
   <string name="example_record">record</string>
   <string name="example_pronunciation">rɪˈkɔːd (noun)</string>
   <string name="example_content">to write information down or store it in a computer or on film so that it can be looked at in the future\nHer husband made her record every penny she spent.\nHe recorded that the operation was successful.</string>
-  <string name="init_word">a</string>
   <string name="error_no_result">No result. Try another word</string>
   <string name="error_network_connection">Please check your internet connection</string>
   <string name="action_retry">RETRY</string>
   <string name="tab_meaning">Meaning</string>
   <string name="tab_more">More</string>
+  <string name="tab_history">History</string>
 </resources>

@@ -65,6 +65,12 @@
 -keep class rx.** { *; }
 -dontnote rx.**
 
+# greenDAO
+-keepclassmembers class * extends de.greenrobot.dao.AbstractDao {
+public static java.lang.String TABLENAME;
+}
+-keep class **$Properties
+
 # Keep all classes in "pearson" package which are used for Retrofit2
 -keepclassmembers class com.dictionary.hckhanh.pearsondictionary.pearson.data.** {
   <fields>;

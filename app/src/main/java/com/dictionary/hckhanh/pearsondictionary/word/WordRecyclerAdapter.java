@@ -15,6 +15,9 @@ import com.dictionary.hckhanh.pearsondictionary.pearson.data.Sense;
 import com.dictionary.hckhanh.pearsondictionary.pearson.data.Word;
 import java.util.List;
 
+/**
+ * The implementation of Word and More tab base for {@link RecyclerView}
+ */
 public class WordRecyclerAdapter extends RecyclerView.Adapter<WordRecyclerAdapter.WordViewHolder> {
 
   private List<Word> words;
@@ -28,16 +31,6 @@ public class WordRecyclerAdapter extends RecyclerView.Adapter<WordRecyclerAdapte
     this.words = words;
   }
 
-  /**
-   * Create the {@link WordViewHolder} of {@link WordRecyclerAdapter}
-   *
-   * @param parent The ViewGroup into which the new View will be added after it is bound to
-   * an adapter position.
-   * @param viewType The view type of the new View.
-   * @return A new ViewHolder that holds a View of the given view type.
-   * @see RecyclerView.Adapter#getItemViewType(int)
-   * @see RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int)
-   */
   @Override public WordViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     return new WordViewHolder(
         LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_word, parent, false));

@@ -1,4 +1,4 @@
-package com.dictionary.hckhanh.pearsondictionary.word;
+package com.dictionary.hckhanh.pearsondictionary.pager;
 
 public class Pager {
   String tabTitle;

@@ -8,22 +8,27 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.dictionary.hckhanh.pearsondictionary.history.HistoryPager;
+import com.dictionary.hckhanh.pearsondictionary.history.HistoryPagerFragment;
 import com.dictionary.hckhanh.pearsondictionary.history.dao.DaoMaster;
 import com.dictionary.hckhanh.pearsondictionary.history.dao.DaoSession;
 import com.dictionary.hckhanh.pearsondictionary.history.dao.History;
 import com.dictionary.hckhanh.pearsondictionary.history.dao.HistoryDao;
+import com.dictionary.hckhanh.pearsondictionary.pager.PagerManager;
 import com.dictionary.hckhanh.pearsondictionary.pearson.DefinitionFilter;
 import com.dictionary.hckhanh.pearsondictionary.pearson.data.Definition;
 import com.dictionary.hckhanh.pearsondictionary.pearson.service.ContentApiService;
-import com.dictionary.hckhanh.pearsondictionary.word.PagerManager;
+import com.dictionary.hckhanh.pearsondictionary.rx.RxEventBus;
 import com.dictionary.hckhanh.pearsondictionary.word.WordPager;
 import com.dictionary.hckhanh.pearsondictionary.word.WordPagerFragment;
 import java.net.UnknownHostException;
+import java.util.List;
 import rx.Subscription;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
@@ -33,15 +38,19 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class DictionaryActivity extends AppCompatActivity {
   private static final long MAX_HISTORY = 50;
+  private static final String INIT_WORD = "a";
   @Bind(R.id.dict_pager) ViewPager dictPager;
   private ContentApiService contentApiService;
   private PagerManager pagerManager;
   private CompositeSubscription subscriptions = new CompositeSubscription();
   private HistoryDao historyDao;
+  private DefinitionFilter filteredWords;
+  private List<History> histories;
   private SearchView.OnQueryTextListener onQueryTextListener =
       new SearchView.OnQueryTextListener() {
         @Override public boolean onQueryTextSubmit(final String query) {
           queryWord(query);
+          saveToDatabase(query);
           return false;
         }
 
@@ -52,23 +61,24 @@ public class DictionaryActivity extends AppCompatActivity {
 
   private void queryWord(final String query) {
     pagerManager.showLoadingIndicator();
+    dictPager.setCurrentItem(0);
 
     Subscription subscription =
         contentApiService.getDefinition(query).subscribe(new Action1<Definition>() {
           @Override public void call(Definition definition) {
             if (definition.getCount() > 0) {
-              DefinitionFilter filteredWords = new DefinitionFilter(definition, query);
+              filteredWords = new DefinitionFilter(definition, query);
               pagerManager.setWords(filteredWords);
               pagerManager.notifyDataSetChanged();
-              pagerManager.hideLoadingIndicator();
-              dictPager.setCurrentItem(0);
             } else {
               Snackbar.make(dictPager, R.string.error_no_result, Snackbar.LENGTH_LONG).show();
-              pagerManager.hideLoadingIndicator();
             }
+
+            pagerManager.hideLoadingIndicator();
           }
         }, new Action1<Throwable>() {
           @Override public void call(Throwable throwable) {
+            pagerManager.hideLoadingIndicator();
             if (throwable instanceof UnknownHostException) {
               Snackbar.make(dictPager, R.string.error_network_connection,
                   Snackbar.LENGTH_INDEFINITE)
@@ -88,11 +98,21 @@ public class DictionaryActivity extends AppCompatActivity {
 
   private void saveToDatabase(String query) {
     History history = new History(null, query);
-    if (historyDao.count() < MAX_HISTORY) {
-      historyDao.insert(history);
-    } else {
+    if (historyDao.count() < MAX_HISTORY && !checkExitWord(query)) {
+      long id = historyDao.insert(history);
+      Log.d(DictionaryActivity.class.getSimpleName(), "History is created with Id: " + id);
 
+      history.setId(id);
+      histories.add(history);
+      pagerManager.notifyDataSetChanged();
     }
+  }
+
+  private boolean checkExitWord(String query) {
+    for (History history : histories) {
+      if (history.getWord().equals(query)) return true;
+    }
+    return false;
   }
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -106,14 +126,16 @@ public class DictionaryActivity extends AppCompatActivity {
     contentApiService = ContentApiService.getContentApiService();
 
     WordPager meaningWordPager =
-        new WordPager(getString(R.string.tab_meaning), null, new WordPagerFragment());
-    WordPager moreWordPager =
-        new WordPager(getString(R.string.tab_more), null, new WordPagerFragment());
+        new WordPager(getString(R.string.tab_meaning), new WordPagerFragment());
+    WordPager moreWordPager = new WordPager(getString(R.string.tab_more), new WordPagerFragment());
+    HistoryPager historyWordPager =
+        new HistoryPager(getString(R.string.tab_history), new HistoryPagerFragment());
 
     // Add pager to pager manager
     pagerManager = new PagerManager(getSupportFragmentManager());
     pagerManager.addPager(meaningWordPager);
     pagerManager.addPager(moreWordPager);
+    pagerManager.addPager(historyWordPager);
 
     // Add adapter to pager
     dictPager.setAdapter(pagerManager);
@@ -124,6 +146,29 @@ public class DictionaryActivity extends AppCompatActivity {
 
     // Initialize the database
     initDatabase();
+
+    // Init Event bus
+    initEventBus();
+  }
+
+  private void initEventBus() {
+    Subscription subscription =
+        RxEventBus.getEventBus().toObservable().subscribe(new Action1<Object>() {
+          @Override public void call(Object o) {
+            if (o instanceof HistoryPagerFragment.OnHistoryStartEvent) {
+              pagerManager.setHistories(histories);
+              pagerManager.notifyDataSetChanged();
+            } else if (o instanceof WordPagerFragment.OnWordStartEvent) {
+              if (filteredWords != null) {
+                pagerManager.setWords(filteredWords);
+                pagerManager.notifyDataSetChanged();
+                pagerManager.hideLoadingIndicator();
+              }
+            }
+          }
+        });
+
+    subscriptions.add(subscription);
   }
 
   private void initDatabase() {
@@ -132,11 +177,13 @@ public class DictionaryActivity extends AppCompatActivity {
     DaoMaster daoMaster = new DaoMaster(db);
     DaoSession daoSession = daoMaster.newSession();
     historyDao = daoSession.getHistoryDao();
+
+    histories = historyDao.queryBuilder().list();
   }
 
   @Override protected void onStart() {
     super.onStart();
-    queryWord(getString(R.string.init_word));
+    queryWord(INIT_WORD);
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {

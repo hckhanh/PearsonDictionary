@@ -1,4 +1,4 @@
-package com.dictionary.hckhanh.pearsondictionary.word;
+package com.dictionary.hckhanh.pearsondictionary.pager;
 
 import android.support.v4.app.Fragment;
 

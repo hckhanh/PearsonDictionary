@@ -18,7 +18,7 @@ public final class RxEventBus {
    *
    * @return The unique instance of {@link RxEventBus}
    */
-  public RxEventBus getEventBus() {
+  public static RxEventBus getEventBus() {
     return RxEventBusLoader.RX_EVENT_BUS_INSTANCE;
   }
 
