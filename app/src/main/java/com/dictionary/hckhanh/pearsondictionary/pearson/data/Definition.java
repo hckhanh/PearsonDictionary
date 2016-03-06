@@ -1,22 +1,21 @@
 package com.dictionary.hckhanh.pearsondictionary.pearson.data;
 
 public class Definition {
+  int status;
 
-    int status;
+  int count;
 
-    int count;
+  Word[] results;
 
-    Word[] results;
+  public int getCount() {
+    return count;
+  }
 
-    public int getCount() {
-        return count;
-    }
+  public int getStatus() {
+    return status;
+  }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public Word[] getResults() {
-        return results;
-    }
+  public Word[] getResults() {
+    return results;
+  }
 }

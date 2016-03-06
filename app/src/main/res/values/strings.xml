@@ -1,8 +1,7 @@
 <resources>
-    <string name="app_name">Pearson Dictionary</string>
-    <string name="action_settings">Settings</string>
-    <string name="search_title">Find word</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="app_name">Pearson Dictionary</string>
+  <string name="search_title">Find word</string>
+  <string name="example_record">record</string>
+  <string name="example_pronunciation">rɪˈkɔːd (noun)</string>
+  <string name="example_content">to write information down or store it in a computer or on film so that it can be looked at in the future\nHer husband made her record every penny she spent.\nHe recorded that the operation was successful.</string>
 </resources>

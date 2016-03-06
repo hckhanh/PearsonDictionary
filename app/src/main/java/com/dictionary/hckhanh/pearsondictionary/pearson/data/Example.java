@@ -1,23 +1,21 @@
 package com.dictionary.hckhanh.pearsondictionary.pearson.data;
 
 public class Example {
+  Audio[] audio;
 
-    Audio[] audio;
+  String text;
 
-    String text;
+  String synonym;
 
-    String synonym;
+  public Audio[] getAudio() {
+    return audio;
+  }
 
-    public Audio[] getAudio() {
-        return audio;
-    }
+  public String getText() {
+    return text;
+  }
 
-    public String getText() {
-        return text;
-    }
-
-    public String getSynonym() {
-        return synonym;
-    }
-
+  public String getSynonym() {
+    return synonym;
+  }
 }

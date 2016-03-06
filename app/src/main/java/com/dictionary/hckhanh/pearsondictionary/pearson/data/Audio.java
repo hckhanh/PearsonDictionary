@@ -1,23 +1,21 @@
 package com.dictionary.hckhanh.pearsondictionary.pearson.data;
 
 public class Audio {
+  String lang;
 
-    String lang;
+  String type;
 
-    String type;
+  String url;
 
-    String url;
+  public String getLang() {
+    return lang;
+  }
 
-    public String getLang() {
-        return lang;
-    }
+  public String getType() {
+    return type;
+  }
 
-    public String getType() {
-        return type;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
+  public String getUrl() {
+    return url;
+  }
 }

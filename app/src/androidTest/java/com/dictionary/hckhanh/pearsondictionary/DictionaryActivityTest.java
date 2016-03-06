@@ -5,24 +5,19 @@ import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
-import com.dictionary.hckhanh.pearsondictionary.pearson.service.PearsonApiConfig;
-import com.dictionary.hckhanh.pearsondictionary.pearson.service.PearsonServiceManager;
+import com.dictionary.hckhanh.pearsondictionary.pearson.service.ContentApiService;
 import com.robotium.solo.Solo;
 
 import java.util.List;
 
 public class DictionaryActivityTest extends ActivityInstrumentationTestCase2<DictionaryActivity> {
 
-    PearsonServiceManager serviceManager;
+    ContentApiService serviceManager;
     private Solo solo;
 
     public DictionaryActivityTest() {
         super(DictionaryActivity.class);
-        serviceManager = new PearsonServiceManager(new PearsonApiConfig(
-                DictionaryActivity.BASE_URL,
-                DictionaryActivity.CONSUMER_KEY,
-                DictionaryActivity.DICTIONARY
-        ));
+        serviceManager = new ContentApiService();
     }
 
     @Override

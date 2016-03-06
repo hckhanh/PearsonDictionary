@@ -2,8 +2,7 @@ package com.dictionary.hckhanh.pearsondictionary;
 
 import com.dictionary.hckhanh.pearsondictionary.pearson.DefinitionFilter;
 import com.dictionary.hckhanh.pearsondictionary.pearson.data.Definition;
-import com.dictionary.hckhanh.pearsondictionary.pearson.service.PearsonApiConfig;
-import com.dictionary.hckhanh.pearsondictionary.pearson.service.PearsonServiceManager;
+import com.dictionary.hckhanh.pearsondictionary.pearson.service.ContentApiService;
 
 import org.junit.Test;
 
@@ -22,13 +21,7 @@ public class ExampleUnitTest {
     public void testResultFilterMeanings() {
         final String findingWord = "record";
 
-        PearsonApiConfig apiConfig = new PearsonApiConfig(
-                DictionaryActivity.BASE_URL,
-                DictionaryActivity.CONSUMER_KEY,
-                DictionaryActivity.DICTIONARY
-        );
-
-        PearsonServiceManager serviceManager = new PearsonServiceManager(apiConfig);
+        ContentApiService serviceManager = new ContentApiService();
 
         serviceManager.getDefinition("record")
                 .subscribe(new Action1<Definition>() {

@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
-    android:layout_height="wrap_content">
+    >
 
-    <LinearLayout
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="8dp"
+      >
+
+    <TextView
+        android:id="@+id/word_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:text="@string/example_record"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="record"
-            android:id="@+id/word_text"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+    <TextView
+        android:id="@+id/pronunciation_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/example_pronunciation"
+        android:textSize="16sp"
+        />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/pronunciation_text"
-            android:text="rɪˈkɔːd (noun)"
-            android:textSize="16sp" />
+    <TextView
+        android:id="@+id/content_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/example_content"
+        />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/content_text"
-            android:text="to write information down or store it in a computer or on film so that it can be looked at in the future\nHer husband made her record every penny she spent.\nHe recorded that the operation was successful."
-            android:layout_marginTop="8dp" />
-
-    </LinearLayout>
+  </LinearLayout>
 
 </android.support.v7.widget.CardView>

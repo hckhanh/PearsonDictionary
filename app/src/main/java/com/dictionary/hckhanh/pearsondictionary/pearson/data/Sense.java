@@ -1,17 +1,15 @@
 package com.dictionary.hckhanh.pearsondictionary.pearson.data;
 
 public class Sense {
+  String[] definition;
 
-    String[] definition;
+  Example[] examples;
 
-    Example[] examples;
+  public String[] getDefinition() {
+    return definition;
+  }
 
-    public String[] getDefinition() {
-        return definition;
-    }
-
-    public Example[] getExamples() {
-        return examples;
-    }
-
+  public Example[] getExamples() {
+    return examples;
+  }
 }
