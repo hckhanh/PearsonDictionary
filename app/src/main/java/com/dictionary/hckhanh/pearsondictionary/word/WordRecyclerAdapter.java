@@ -21,6 +21,7 @@ public class WordRecyclerAdapter extends RecyclerView.Adapter<WordRecyclerAdapte
 
   /**
    * Initialize the object
+   *
    * @param words The {@link List} of {@link Word}
    */
   public WordRecyclerAdapter(List<Word> words) {

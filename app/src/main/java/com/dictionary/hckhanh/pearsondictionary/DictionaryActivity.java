@@ -1,5 +1,6 @@
 package com.dictionary.hckhanh.pearsondictionary;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -12,6 +13,10 @@ import android.view.MenuItem;
 import android.view.View;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.dictionary.hckhanh.pearsondictionary.history.dao.DaoMaster;
+import com.dictionary.hckhanh.pearsondictionary.history.dao.DaoSession;
+import com.dictionary.hckhanh.pearsondictionary.history.dao.History;
+import com.dictionary.hckhanh.pearsondictionary.history.dao.HistoryDao;
 import com.dictionary.hckhanh.pearsondictionary.pearson.DefinitionFilter;
 import com.dictionary.hckhanh.pearsondictionary.pearson.data.Definition;
 import com.dictionary.hckhanh.pearsondictionary.pearson.service.ContentApiService;
@@ -27,10 +32,12 @@ import rx.subscriptions.CompositeSubscription;
  * The main activity of the dictionary app.
  */
 public class DictionaryActivity extends AppCompatActivity {
+  private static final long MAX_HISTORY = 50;
   @Bind(R.id.dict_pager) ViewPager dictPager;
   private ContentApiService contentApiService;
   private PagerManager pagerManager;
   private CompositeSubscription subscriptions = new CompositeSubscription();
+  private HistoryDao historyDao;
   private SearchView.OnQueryTextListener onQueryTextListener =
       new SearchView.OnQueryTextListener() {
         @Override public boolean onQueryTextSubmit(final String query) {
@@ -64,16 +71,28 @@ public class DictionaryActivity extends AppCompatActivity {
           @Override public void call(Throwable throwable) {
             if (throwable instanceof UnknownHostException) {
               Snackbar.make(dictPager, R.string.error_network_connection,
-                  Snackbar.LENGTH_INDEFINITE).setAction(R.string.action_retry, new View.OnClickListener() {
-                @Override public void onClick(View v) {
-                  queryWord(query);
-                }
-              }).show();
+                  Snackbar.LENGTH_INDEFINITE)
+                  .setAction(R.string.action_retry, new View.OnClickListener() {
+                    @Override public void onClick(View v) {
+                      queryWord(query);
+                      saveToDatabase(query);
+                    }
+                  })
+                  .show();
             }
           }
         });
 
     subscriptions.add(subscription);
+  }
+
+  private void saveToDatabase(String query) {
+    History history = new History(null, query);
+    if (historyDao.count() < MAX_HISTORY) {
+      historyDao.insert(history);
+    } else {
+
+    }
   }
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +105,10 @@ public class DictionaryActivity extends AppCompatActivity {
 
     contentApiService = ContentApiService.getContentApiService();
 
-    WordPager meaningWordPager = new WordPager(getString(R.string.tab_meaning), null, new WordPagerFragment());
-    WordPager moreWordPager = new WordPager(getString(R.string.tab_more), null, new WordPagerFragment());
+    WordPager meaningWordPager =
+        new WordPager(getString(R.string.tab_meaning), null, new WordPagerFragment());
+    WordPager moreWordPager =
+        new WordPager(getString(R.string.tab_more), null, new WordPagerFragment());
 
     // Add pager to pager manager
     pagerManager = new PagerManager(getSupportFragmentManager());
@@ -100,6 +121,17 @@ public class DictionaryActivity extends AppCompatActivity {
     // Add pager to Tab Layout
     TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tab);
     tabLayout.setupWithViewPager(dictPager);
+
+    // Initialize the database
+    initDatabase();
+  }
+
+  private void initDatabase() {
+    DaoMaster.OpenHelper dbHelper = new DaoMaster.DevOpenHelper(this, "dict-db", null);
+    SQLiteDatabase db = dbHelper.getWritableDatabase();
+    DaoMaster daoMaster = new DaoMaster(db);
+    DaoSession daoSession = daoMaster.newSession();
+    historyDao = daoSession.getHistoryDao();
   }
 
   @Override protected void onStart() {
