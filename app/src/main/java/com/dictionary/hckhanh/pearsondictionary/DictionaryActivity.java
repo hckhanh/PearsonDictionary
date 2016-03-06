@@ -56,15 +56,15 @@ public class DictionaryActivity extends AppCompatActivity {
               pagerManager.hideLoadingIndicator();
               dictPager.setCurrentItem(0);
             } else {
-              Snackbar.make(dictPager, "No result. Try another word", Snackbar.LENGTH_LONG).show();
+              Snackbar.make(dictPager, R.string.error_no_result, Snackbar.LENGTH_LONG).show();
               pagerManager.hideLoadingIndicator();
             }
           }
         }, new Action1<Throwable>() {
           @Override public void call(Throwable throwable) {
             if (throwable instanceof UnknownHostException) {
-              Snackbar.make(dictPager, "Please check your internet connection",
-                  Snackbar.LENGTH_INDEFINITE).setAction("RETRY", new View.OnClickListener() {
+              Snackbar.make(dictPager, R.string.error_network_connection,
+                  Snackbar.LENGTH_INDEFINITE).setAction(R.string.action_retry, new View.OnClickListener() {
                 @Override public void onClick(View v) {
                   queryWord(query);
                 }
@@ -86,8 +86,8 @@ public class DictionaryActivity extends AppCompatActivity {
 
     contentApiService = ContentApiService.getContentApiService();
 
-    WordPager meaningWordPager = new WordPager("Meaning", null, new WordPagerFragment());
-    WordPager moreWordPager = new WordPager("More", null, new WordPagerFragment());
+    WordPager meaningWordPager = new WordPager(getString(R.string.tab_meaning), null, new WordPagerFragment());
+    WordPager moreWordPager = new WordPager(getString(R.string.tab_more), null, new WordPagerFragment());
 
     // Add pager to pager manager
     pagerManager = new PagerManager(getSupportFragmentManager());
@@ -104,7 +104,7 @@ public class DictionaryActivity extends AppCompatActivity {
 
   @Override protected void onStart() {
     super.onStart();
-    queryWord("a");
+    queryWord(getString(R.string.init_word));
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
