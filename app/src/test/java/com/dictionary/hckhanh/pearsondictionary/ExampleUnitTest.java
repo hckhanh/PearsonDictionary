@@ -1,8 +1,8 @@
-package com.dictionary.hckhanh.pearsondictionary;
+package com.hckhanh.pearson.dict;
 
-import com.dictionary.hckhanh.pearsondictionary.pearson.DefinitionFilter;
-import com.dictionary.hckhanh.pearsondictionary.pearson.data.Definition;
-import com.dictionary.hckhanh.pearsondictionary.pearson.service.ContentApiService;
+import com.hckhanh.pearson.dict.pearson.DefinitionFilter;
+import com.hckhanh.pearson.dict.pearson.data.Definition;
+import com.hckhanh.pearson.dict.pearson.service.ContentApiService;
 
 import org.junit.Test;
 

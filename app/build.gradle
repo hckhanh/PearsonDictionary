@@ -5,7 +5,7 @@ android {
   buildToolsVersion "23.0.2"
 
   defaultConfig {
-    applicationId "com.dictionary.hckhanh.pearsondictionary"
+    applicationId "com.hckhanh.pearson.dict"
     minSdkVersion 20
     targetSdkVersion 23
     versionCode 2
@@ -35,7 +35,7 @@ dependencies {
   compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
   compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
   compile 'io.reactivex:rxandroid:1.1.0'
-  compile 'io.reactivex:rxjava:1.1.0'
+  compile 'io.reactivex:rxjava:1.1.1'
   compile 'com.jakewharton:butterknife:7.0.1'
   compile 'de.greenrobot:greendao:2.1.0'
 }

@@ -1,0 +1,33 @@
+package com.hckhanh.pearson.dict.pearson.data;
+
+public class Word {
+  String id;
+
+  String headword;
+
+  String part_of_speech;
+
+  Pronunciation[] pronunciations;
+
+  Sense[] senses;
+
+  public String getId() {
+    return id;
+  }
+
+  public String getHeadword() {
+    return headword;
+  }
+
+  public String getPartOfSpeech() {
+    return part_of_speech;
+  }
+
+  public Pronunciation[] getPronunciations() {
+    return pronunciations;
+  }
+
+  public Sense[] getSenses() {
+    return senses;
+  }
+}

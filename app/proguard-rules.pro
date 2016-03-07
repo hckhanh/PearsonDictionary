@@ -51,8 +51,9 @@
 -keep public class android.support.v7.widget.** { *; }
 -keep public class android.support.v7.internal.widget.** { *; }
 -keep public class android.support.v7.internal.view.menu.** { *; }
+
 -keep public class * extends android.support.v4.view.ActionProvider {
-    public <init>(android.content.Context);
+  public <init>(android.content.Context);
 }
 
 # Gson
@@ -62,12 +63,13 @@
 -dontnote okhttp3.**
 
 # Okio
+-dontnote okio.**
 
 # RxJava/RxAndroid
 -dontnote rx.**
 -keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
-   long producerIndex;
-   long consumerIndex;
+  long producerIndex;
+  long consumerIndex;
 }
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
   rx.internal.util.atomic.LinkedQueueNode producerNode;
@@ -78,16 +80,16 @@
 
 # greenDAO
 -keepclassmembers class * extends de.greenrobot.dao.AbstractDao {
-public static java.lang.String TABLENAME;
+  public static java.lang.String TABLENAME;
 }
 
 -keep class **$Properties
 
 # Keep all classes in "pearson" package which are used for Retrofit2
--keepclassmembers class com.dictionary.hckhanh.pearsondictionary.pearson.data.** {
+-keepclassmembers class com.hckhanh.pearson.dict.pearson.data.** {
   <fields>;
 }
 
--keepclassmembers interface com.dictionary.hckhanh.pearsondictionary.pearson.service.ContentApis {
+-keepclassmembers interface com.hckhanh.pearson.dict.pearson.service.ContentApis {
   *;
 }
